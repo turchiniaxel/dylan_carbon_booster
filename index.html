@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Booster - Wokistan Edition</title>
+    <style>
+        :root {
+            --wok-red: #ff4136;
+            --wok-orange: #ff851b;
+            --wok-yellow: #ffdc00;
+            --wok-green: #2ecc40;
+            --wok-blue: #0074d9;
+            --wok-purple: #b10dc9;
+            --container-bg: rgba(255, 255, 255, 0.9);
+            --text-main: #333;
+            --error-color: #ff4136;
+            --success-color: #2ecc40;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--wok-red), var(--wok-orange), var(--wok-yellow), var(--wok-green), var(--wok-blue), var(--wok-purple));
+            background-size: 400% 400%;
+            animation: wokGradient 15s ease infinite;
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        @keyframes wokGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background-color: var(--container-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            z-index: 10;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        h1 { color: var(--wok-purple); font-size: 1.8rem; margin-bottom: 2rem; }
+
+        input {
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #ddd;
+            color: #333;
+            padding: 15px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 1.5rem;
+            letter-spacing: 5px;
+            margin-bottom: 1.5rem;
+            border-radius: 10px;
+        }
+
+        button {
+            background: linear-gradient(90deg, var(--wok-blue), var(--wok-purple));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+
+        button:active { transform: scale(0.98); }
+
+        #error-msg { color: var(--error-color); margin-top: 15px; font-weight: bold; visibility: hidden; }
+
+        .hidden { display: none; }
+        .success-title { color: var(--success-color); font-size: 2.2rem; margin-bottom: 1rem; }
+
+        .success-link {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 10px 20px;
+            background-color: var(--wok-red);
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 12px; height: 12px;
+            top: -10px; z-index: 1;
+            animation: fall 3s linear infinite;
+            border-radius: 50%;
+        }
+
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app-container">
+    <div id="login-view">
+        <h1>🌈 DE-WOKIZE DYLAN'S CARD</h1>
+        <p style="margin-bottom: 20px; font-size: 0.9rem;">Enter the 16 capitalist fragments</p>
+        <input type="text" id="code-input" placeholder="____ ____ ____ ____" maxlength="16">
+        <button onclick="validateData()">RESTORE PATRIARCHY</button>
+        <p id="error-msg">⚠️ INCLUSIVITY ALERT: INVALID CODE ⚠️</p>
+    </div>
+
+    <div id="success-view" class="hidden">
+        <h1 class="success-title">💰 CAPITALISM WINS!</h1>
+        <p>The fragments are assembled.</p>
+        <p>Dylan's footprint is about to explode.</p>
+        <img width="200px" src="assets/dylan.jpg" alt="dylan"/>
+        <p style="font-size: 2rem;">🌍🔥</p>
+        <a href="https://votre-site-de-voyage.com" class="success-link" target="_blank">BOOK CLIMATE DISASTER</a>
+    </div>
+</div>
+
+<script>
+    const SECRET_CODE = "4951243831201062";
+
+    // Configuration des sons
+    const victoryAudio = new Audio('assets/miaou_song.mp3');
+    const failAudio = new Audio('assets/oiia.mp3'); // Chemin vers votre fichier .mpa d'erreur
+
+    function validateData() {
+        const inputField = document.getElementById('code-input');
+        const input = inputField.value;
+        const error = document.getElementById('error-msg');
+
+        if (input === SECRET_CODE) {
+            showSuccess();
+        } else {
+            // Logique d'échec
+            error.style.visibility = 'visible';
+            inputField.value = '';
+
+            // Jouer le son d'erreur (format .mpa)
+            failAudio.currentTime = 0; // Remet à zéro si déjà en cours
+            failAudio.play().catch(e => console.log("Fail audio playback failed:", e));
+
+            // Effet visuel de secousse
+            document.getElementById('app-container').style.animation = 'shake 0.4s';
+            setTimeout(() => { document.getElementById('app-container').style.animation = ''; }, 400);
+        }
+    }
+
+    function showSuccess() {
+        document.getElementById('login-view').classList.add('hidden');
+        document.getElementById('success-view').classList.remove('hidden');
+        document.body.style.animation = 'none';
+        document.body.style.background = '#2ecc40';
+
+        // Arrêter le son d'erreur s'il tournait encore et jouer la victoire
+        failAudio.pause();
+        victoryAudio.play().catch(e => console.log("Victory audio playback failed:", e));
+
+        createConfetti();
+    }
+
+    function createConfetti() {
+        const colors = ['#ff4136', '#ff851b', '#ffdc00', '#2ecc40', '#0074d9', '#b10dc9'];
+        for (let i = 0; i < 150; i++) {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.opacity = Math.random();
+            document.body.appendChild(confetti);
+        }
+    }
+</script>
+
+</body>
+</html>
