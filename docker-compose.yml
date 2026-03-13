@@ -5,7 +5,7 @@ services:
     build: .
     container_name: dylan_carbon_booster
     ports:
-      - "8080:80"  # Access the site at http://localhost:8080
+      - "8091:80"  # Access the site at http://localhost:8080
     volumes:
       - .:/usr/share/nginx/html # Hot-reload during development
     restart: always
